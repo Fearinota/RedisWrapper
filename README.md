@@ -1,0 +1,2 @@
+# RedisWrapper
+PhpRedisのラッパークラス
