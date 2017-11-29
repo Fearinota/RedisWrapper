@@ -112,20 +112,8 @@ class Redis extends \Redis
         $result = [];
         $values = parent::mget($keys);
         $count = count($keys);
-        $vcount = count($values);
-        if ($count == $vcount) {
-            $check = true;
-            $tmp = [];
-            for ($i=0; $i<$count; $i++) {
-                if (empty($values[$i])) {
-                    $check = false;
-                    break;
-                }
-                $tmp[$keys[$i]] = $values[$i];
-            }
-            if ($check) {
-                $result = $tmp;
-            }
+        for ($i=0; $i<$count; $i++) {
+            $result[$keys[$i]] = $values[$i];
         }
         return $result;
     }
@@ -182,21 +170,8 @@ class Redis extends \Redis
         $result = [];
         $this->changeDb($this->_db_no);
         $values = parent::hMGet($key, $keys);
-        $count = count($keys);
-        $vcount = count($values);
-        if ($count == $vcount) {
-            $check = true;
-            $tmp = [];
-            for ($i=0; $i<$count; $i++) {
-                if (empty($values[$i])) {
-                    $check = false;
-                    break;
-                }
-                $tmp[$keys[$i]] = $values[$i];
-            }
-            if ($check) {
-                $result = $tmp;
-            }
+        foreach ($keys as $k) {
+            $result[$k] = $values[$k];
         }
         return $result;
     }
